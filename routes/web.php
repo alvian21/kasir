@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::view('/testku','dashboard.test2');
 Route::view('/test','dashboard.test');
 require 'dashboard.php';
 

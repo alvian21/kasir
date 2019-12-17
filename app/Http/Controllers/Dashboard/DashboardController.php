@@ -26,6 +26,7 @@ class DashboardController extends Controller
         $barang = new Barang;
         $barang->name = $request->get('nama_barang');
         $barang->kode = $request->get('kode_barang');
+        $barang->harga = $request->get('harga_barang');
         $barang->qty = $request->get('jml_barang');
         $barang->save();
 
@@ -42,6 +43,7 @@ class DashboardController extends Controller
             echo '<td id="kode_brg">'.$row->kode.'</td>';
             echo '<td id="nama_brg">'.$row->name.'</td>';
             echo '<td id="jml_brg">'.$row->qty.'</td>';
+            echo '<td id="harga_brg">'.$row->harga.'</td>';
             if($row->qty == 0){
                 echo '<td>stok habis</td>';
             }elseif($row->qty < 10){

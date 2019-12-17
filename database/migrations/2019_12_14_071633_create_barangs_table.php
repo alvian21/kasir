@@ -18,6 +18,7 @@ class CreateBarangsTable extends Migration
             $table->string('kode');
             $table->string('name');
             $table->integer('qty')->nullable();
+            $table->string('harga');
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });

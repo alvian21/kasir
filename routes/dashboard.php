@@ -28,6 +28,9 @@ Route::group([
     'prefix'        => 'admin',
     'middleware'    => ['auth','checkRole:admin,karyawan']], function(){
         Route::get('/dashboard','DashboardController@index');
+        Route::post('/pembelian/fetch','PembelianController@fetchform')->name('beli.fetch');
+        Route::post('/pembelian/hitung','PembelianController@hitung')->name('beli.hitung');
+        Route::get('/pembelian/hitung','PembelianController@hitung');
         Route::post('/member/fetch','MemberController@fetchdata')->name('member.fetch');
         Route::post('/member/edit','MemberController@edit')->name('member.edit');
         Route::get('/member/delete','MemberController@delete')->name('member.delete');
@@ -36,6 +39,7 @@ Route::group([
         Route::get('/barang','DashboardController@barang')->name('barang');
         Route::post('/barang','DashboardController@barangBaru')->name('tmbbarang');
         Route::post('/fetchdata','DashboardController@fetchdata');
+        Route::get('/pembelian','PembelianController@index')->name('pembelian');
         Route::post('/barang/edit','DashboardController@editBarang')->name('editbarang');
         Route::get('/barang/delete','DashboardController@deleteBarang')->name('deleteBarang');
         Route::get('/logout','DashboardController@logout')->name('logout');

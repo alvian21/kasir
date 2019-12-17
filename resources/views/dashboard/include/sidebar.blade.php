@@ -43,6 +43,13 @@
             @endif
             @if(Auth()->user()->role == 'karyawan')
             <li class="nav-item">
+                    <a class="nav-link " href="{{ Route('pembelian') }}">
+                    <i class="ni ni-bag-17 text-yellow"></i>Pembelian
+                    </a>
+                </li>
+            @endif
+            @if(Auth()->user()->role == 'karyawan')
+            <li class="nav-item">
                     <a class="nav-link " href="{{ route('member') }}">
                     <i class="ni ni-single-02 text-yellow"></i>Member
                     </a>

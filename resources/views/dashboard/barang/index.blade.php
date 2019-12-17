@@ -61,6 +61,10 @@
                       <input type="text" class="form-control" name="nama_barang">
                     </div>
                     <div class="form-group">
+                        <label for="harga_barang">Harga Barang</label>
+                        <input type="number" class="form-control" name="harga_barang">
+                      </div>
+                    <div class="form-group">
                         <label for="jml_barang">Jumlah Barang</label>
                         <input type="number" class="form-control" name="jml_barang">
                     </div>
@@ -98,6 +102,7 @@
               <th scope="col">Kode barang</th>
               <th scope="col">Nama</th>
               <th scope="col">Quantity</th>
+              <th scope="col">Harga</th>
               <th scope="col">Keterangan</th>
               <th scope="col"></th>
             </tr>
