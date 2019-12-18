@@ -125,6 +125,7 @@
         method: 'POST',
         data: {
             'data':data,
+            
         },
 
         success:function(data){
