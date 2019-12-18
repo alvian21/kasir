@@ -53,6 +53,10 @@
                     {{ method_field('POST') }}
                     <meta name="csrf-token" content="{{ csrf_token() }}">
                     <div class="form-group">
+                        <label for="kode">Kode Member</label>
+                        <input type="text" class="form-control" name="kode" aria-describedby="emailHelp" placeholder="Kode Member">
+                      </div>
+                    <div class="form-group">
                       <label for="nama">Nama Member</label>
                       <input type="text" class="form-control" name="nama" aria-describedby="emailHelp" placeholder="Nama Member">
                     </div>
@@ -96,6 +100,7 @@
           <thead  class="thead-dark">
             <tr>
               <th scope="col">No</th>
+              <th scope="col">Kode</th>
               <th scope="col">Nama</th>
               <th scope="col">Email</th>
               <th scope="col">Nomer hp</th>
@@ -197,14 +202,16 @@ $(document).ready(function(){
             return $(this).text();
         }).get();
         $('#id').val(data[1]);
-        $('#nama_mbr').val(data[2]);
-        $('#email_mbr').val(data[3]);
-        $('#nomer_mbr').val(data[4]);
+        $('#kode_member').val(data[2]);
+        $('#nama_mbr').val(data[3]);
+        $('#email_mbr').val(data[4]);
+        $('#nomer_mbr').val(data[5]);
     });
 
     $('#saveeditmbr').on('click', function(){
         var id = $('#id').val();
         var nama = $('#nama_mbr').val();
+        var kode = $('#kode_mbr').val();
         var email = $('#email_mbr').val();
         var nomer = $('#nomer_mbr').val();
         $.ajax({
@@ -212,6 +219,7 @@ $(document).ready(function(){
             method: 'POST',
             data: {
                 'id':id,
+                'kode':kode,
                 'nama':nama,
                 'email':email,
                 'phone_number':nomer,

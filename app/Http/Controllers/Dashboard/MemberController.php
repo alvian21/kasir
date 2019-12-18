@@ -16,6 +16,7 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         $member = new Member;
+        $member->kode = $request->get('kode');
             $member->name = $request->get('nama');
             $member->email = $request->get('email');
             $member->phone_number = $request->get('nomerhp');
@@ -32,6 +33,7 @@ class MemberController extends Controller
             echo '<tr>';
             echo '<td id="no">'.$no.'</td>';
             echo '<td id="id_member" style="display:none;">'.$row->id.'</td>';
+            echo '<td id="kode_member">'.$row->kode.'</td>';
             echo '<td id="nama_member">'.$row->name.'</td>';
             echo '<td id="email_member">'.$row->email.'</td>';
             echo '<td id="hp_member">'.$row->phone_number.'</td>';
@@ -60,6 +62,7 @@ class MemberController extends Controller
     public function edit(Request $request)
     {
         $member = Member::find($request->get('id'));
+        $member->kode = $request->get('kode');
         $member->name = $request->get('nama');
         $member->email = $request->get('email');
         $member->phone_number = $request->get('phone_number');

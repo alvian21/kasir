@@ -13,6 +13,7 @@ class hitung
         {
             case 'hitung':
             return $this->a * $this->b;
+
         }
      }
 

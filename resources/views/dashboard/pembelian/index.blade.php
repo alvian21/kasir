@@ -16,7 +16,7 @@
         <form  id="formpembelian">
             {{ method_field('POST') }}
             <meta name="csrf-token" content="{{ csrf_token() }}">
-            <h6 class="heading-small text-muted mb-4">User information</h6>
+            <h6 class="heading-small text-muted mb-4">Sistem pembayaran</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-6">
@@ -26,7 +26,9 @@
                             <meta name="csrf-token" content="{{ csrf_token() }}">
                             {{-- <option value="pilihbrg" >Pilih Barang</option> --}}
                         @foreach($data as $row)
+                        @if($row->qty >0)
                         <option value="{{ $row->id }}" >{{ $row->name }}</option>
+                        @endif
                         @endforeach
                     </select>
                     <br>
@@ -34,6 +36,21 @@
                     <input type="number" id="uang" name="uang" min="0" class="form-control form-control-alternative" placeholder="Jumlah Uang">
                   </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="form-group focused">
+                      <label class="form-control-label" for="boot-multiselect-demo">Punya Member</label>
+                      <select class="custom-select my-1 mr-sm-2 action" id="havemember" >
+                              {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+                              <option value="no" >Tidak Punya</option>
+                        @foreach ($member as $mbr )
+                        <option value="{{ $mbr->id }}" >{{ $mbr->kode }} - {{ $mbr->name }}</option>
+                        @endforeach
+
+
+                      </select>
+
+                    </div>
+                  </div>
                 <div class="col-lg-3">
                   <div class="form-group focused" id="fetchitung">
                     {{-- <label class="form-control-label" for="input-last-name">Nama belakang</label>
@@ -41,24 +58,9 @@
                   </div>
                 </div>
               </div>
-              {{-- <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group focused">
-                    <label class="form-control-label" for="input-nomerhp">Nomer Handphone</label>
-                    <input type="text" id="input-nomerhp" name="numberphone" class="form-control form-control-alternative" placeholder="08123456789" >
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-email">Email address</label>
-                    <input type="email" id="input-email" name="email" class="form-control form-control-alternative" placeholder="email@example.com">
-                  </div>
-                </div>
-              </div> --}}
             </div>
             <hr class="my-4">
             <!-- Address -->
-            <h6 class="heading-small text-muted mb-4">Contact information</h6>
             {{-- <div class="pl-lg-4">
               <div class="row">
                 <div class="col-md-12">
@@ -144,9 +146,11 @@
            values.push($(this).val());
       });
 
+      var member = $('#havemember').val();
       var uang = $('#uang').val();
       var name = $(this).attr('data-id');
 
+      console.log(member);
       var id = [];
       $("div input[name='datahitung']").each(function() {
            id.push($(this).attr('data-id'));
@@ -160,7 +164,7 @@
             newarray.push(thing);
         }
         console.log(newarray);
-        
+
 
         if($('#pilihbrg').val()==""){
             swal("Error", "Pilih barang yg mau dibeli", "error");
@@ -174,6 +178,7 @@
             method: 'POST',
             data: {'data':newarray,
                     'name':name,
+                    'member':member,
                     'uang':uang,
             },
             success:function(response){
@@ -184,15 +189,6 @@
             }
       });
         }
-
-
-    // var values = [];
-    //     var fields = document.getElementsByName("datahitung");
-    //     for(var i = 0; i < fields.length; i++) {
-    //         values.push(fields[i].value);
-    //     }
-
-    //     console.log(values);
     });
 });
 </script>

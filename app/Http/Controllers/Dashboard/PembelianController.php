@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Barang;
+use App\Member;
 use App\CustomClass\hitung;
 
 class PembelianController extends Controller
@@ -12,11 +13,14 @@ class PembelianController extends Controller
     public function index()
     {
         $data = Barang::all();
-        return view('dashboard.pembelian.index', ['data' => $data]);
+        $member = Member::all();
+
+        return view('dashboard.pembelian.index', ['data' => $data, 'member'=>$member]);
     }
 
     public function fetchform(Request $request)
     {
+
         if ($request->get('data') != null) {
             $data = Barang::find($request->get('data'));
 
@@ -35,30 +39,51 @@ class PembelianController extends Controller
     public function hitung(Request $request)
     {
         $data = $request->get('data');
-            $z = array();
-            foreach ($data as $key => $value) {
+        $member = $request->get('member');
 
-                foreach ($value as $row => $a) {
-                    $b = $this->filter($a);
-                        $hitung = $this->find($row, $b);
-                        $kali = new hitung;
-                        $result = $kali->result($b, $hitung->harga, $request->get('name'));
-                        $z[$key] = $result;
-                        $hasil = array_sum($z);
-                        $hasilnya = $request->get('uang') - $hasil;
-                        if($request->get('uang') > $hasil && $b!=""){
-                            echo 'Kembaliannya : '.$hasilnya;
-                            $hitung->save();
-                        }elseif($request->get('uang')==null){
-                            echo 'Masukkan jumlah uangnya';
-                        } else{
-                            echo 'uang anda kurang';
-                        }
+        // var_dump ($member[0]);
 
-                }
+        $z = array();
+        foreach ($data as $key => $value) {
 
+            foreach ($value as $row => $a) {
+                $b = $this->filter($a);
+                    $hitung = $this->find($row, $b);
+                    $kali = new hitung;
+                    $result = $kali->result($b, $hitung->harga, $request->get('name'));
 
             }
+            $z[$key] = $result;
+
+        }
+        $hasil = array_sum($z);
+
+        if($member[0] == "no"){
+
+            $hasilnya = $request->get('uang') - $hasil;
+            if($request->get('uang') > $hasil && $b!=""){
+                echo 'Kembaliannya : '.$hasilnya;
+                $hitung->save();
+            }elseif($request->get('uang')==null){
+                echo 'Masukkan jumlah uangnya';
+            } else{
+                echo 'uang anda kurang';
+            }
+
+        }else{
+            $hasilnya1 = $hasil - (0.05 * $hasil);
+            $hasilnya1 = $request->get('uang') - $hasilnya1;
+            if($request->get('uang') > $hasil && $b!=""){
+                echo 'Kembaliannya : '.$hasilnya1;
+                $hitung->save();
+            }elseif($request->get('uang')==null){
+                echo 'Masukkan jumlah uangnya';
+            } else{
+                echo 'uang anda kurang';
+            }
+
+        }
+
 
 
 
