@@ -41,13 +41,8 @@ class PembelianController extends Controller
     {
         $data = $request->get('data');
         $member = $request->get('member');
-
-        // var_dump ($member[0]);
-
         $z = array();
-        $final = array();
-
-
+        $coba = array();
         foreach ($data as $key => $value) {
 
             foreach ($value as $row => $a) {
@@ -57,23 +52,26 @@ class PembelianController extends Controller
                     $result = $kali->result($b, $hitung->harga, $request->get('name'));
 
             }
-            $z[$key] = $result;
+                    $z[$key] = $result;
+                    $intial = array('name: '.$hitung->name,
+                    'price: '.$hitung->harga,
+                    'qty: '.$b
+                    );
 
-            $intial = array('name: '.$hitung->name,
-            'price: '.$hitung->harga,
-            'qty: '.$b
-            );
+                    $final = array();
 
-            foreach($intial as $dataku){
-            list($key, $dataku) = explode(': ',$dataku);
-            $final[$key] = $dataku;
-            }
-            $final = json_encode($final);
+                    foreach($intial as $dataku){
+                            list($key, $dataku) = explode(': ',$dataku);
+                            $final[$key] = $dataku;
+
+                            }
+
+                    $coba[] = $final;
+
+
         }
 
-
-
-
+        $array = json_encode($coba);
 
         $hasil = array_sum($z);
 
@@ -102,12 +100,9 @@ class PembelianController extends Controller
             }
 
         }
-
-
-
-
-
-
+          $receipt = new Receipt;
+          $receipt->name = $array;
+          $receipt->save();
 
 
     }
