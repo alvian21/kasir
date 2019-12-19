@@ -185,6 +185,7 @@
             success:function(response){
                 $('#formpembelian')[0].reset();
                 // $('#fetchitung')[0].reset();
+                console.log(response);
                 swal(response);
 
             }

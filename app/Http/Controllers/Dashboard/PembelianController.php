@@ -44,6 +44,7 @@ class PembelianController extends Controller
         // var_dump ($member[0]);
 
         $z = array();
+        $t = array();
         foreach ($data as $key => $value) {
 
             foreach ($value as $row => $a) {
@@ -54,8 +55,12 @@ class PembelianController extends Controller
 
             }
             $z[$key] = $result;
+            $t[$key] = $hitung->name;
+
+
 
         }
+       
         $hasil = array_sum($z);
 
         if($member[0] == "no"){
