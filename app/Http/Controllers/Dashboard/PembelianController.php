@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Barang;
 use App\Member;
 use App\CustomClass\hitung;
+use App\Receipt;
 
 class PembelianController extends Controller
 {
@@ -44,26 +45,39 @@ class PembelianController extends Controller
         // var_dump ($member[0]);
 
         $z = array();
-        $t = array();
+        $final = array();
+
+
         foreach ($data as $key => $value) {
 
             foreach ($value as $row => $a) {
-                $b = $this->filter($a);
+                    $b = $this->filter($a);
                     $hitung = $this->find($row, $b);
                     $kali = new hitung;
                     $result = $kali->result($b, $hitung->harga, $request->get('name'));
 
             }
             $z[$key] = $result;
-            $t[$key] = $hitung->name;
 
+            $intial = array('name: '.$hitung->name,
+            'price: '.$hitung->harga,
+            'qty: '.$b
+            );
 
-
+            foreach($intial as $dataku){
+            list($key, $dataku) = explode(': ',$dataku);
+            $final[$key] = $dataku;
+            }
+            $final = json_encode($final);
         }
-       
+
+
+
+
+
         $hasil = array_sum($z);
 
-        if($member[0] == "no"){
+        if(strpos($member,'no') !== false){
 
             $hasilnya = $request->get('uang') - $hasil;
             if($request->get('uang') > $hasil && $b!=""){
@@ -76,10 +90,10 @@ class PembelianController extends Controller
             }
 
         }else{
-            $hasilnya1 = $hasil - (0.05 * $hasil);
-            $hasilnya1 = $request->get('uang') - $hasilnya1;
+            $hasilnya = $hasil - (0.05 * $hasil);
+            $hasilnya = $request->get('uang') - $hasilnya;
             if($request->get('uang') > $hasil && $b!=""){
-                echo 'Kembaliannya : '.$hasilnya1;
+                echo 'Kembaliannya : '.$hasilnya;
                 $hitung->save();
             }elseif($request->get('uang')==null){
                 echo 'Masukkan jumlah uangnya';
@@ -88,6 +102,8 @@ class PembelianController extends Controller
             }
 
         }
+
+
 
 
 
