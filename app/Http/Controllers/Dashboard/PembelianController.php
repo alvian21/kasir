@@ -55,7 +55,8 @@ class PembelianController extends Controller
                     $z[$key] = $result;
                     $intial = array('name: '.$hitung->name,
                     'price: '.$hitung->harga,
-                    'qty: '.$b
+                    'qty: '.$b,
+                    'result: '.$result
                     );
 
                     $final = array();

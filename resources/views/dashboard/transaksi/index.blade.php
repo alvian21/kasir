@@ -16,6 +16,7 @@
                 <th scope="col">Jumlah uang</th>
                 <th scope="col">Total yg dibayar</th>
                 <th scope="col">Tanggal</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -27,15 +28,24 @@
 
               <tr>
                 <th scope="row">{{ $loop->iteration }}</th>
-                <td><a href="#">
+                <td>
                     @foreach ($name as $nama)
                     {{ $nama["name"] .= ', ' }}
                @endforeach
-                </a>
                 </td>
                 <td>{{ $row->money }}</td>
                 <td>{{ $row->total }}</td>
                 <td>{{ $row->created_at }}</td>
+                <td class=""> <div class="dropdown">
+                        <a class="btn btn-sm btn-icon-only text-light" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                        <button class="dropdown-item " onclick="window.location.href='{{ Route('detail',[$row->id]) }}'">Detail</button>
+                        <button class="dropdown-item " >Delete</button>
+                        </div>
+                    </div>
+              </td>
               </tr>
 
               @endforeach

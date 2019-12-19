@@ -19,4 +19,11 @@ class TransactionController extends Controller
         }
         return view('dashboard.transaksi.index',['data'=>$data]);
     }
+
+
+    public function detail($id)
+    {
+        $data = Receipt::find($id);
+        return view('dashboard.transaksi.detail', ['data'=>$data]);
+    }
 }

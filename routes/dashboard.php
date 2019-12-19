@@ -43,5 +43,6 @@ Route::group([
         Route::post('/barang/edit','DashboardController@editBarang')->name('editbarang');
         Route::get('/barang/delete','DashboardController@deleteBarang')->name('deleteBarang');
         Route::get('/transaksi','TransactionController@index')->name('transaksi');
+        Route::get('/transaksi/detail/{id}','TransactionController@detail')->name('detail');
         Route::get('/logout','DashboardController@logout')->name('logout');
 });
