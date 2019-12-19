@@ -104,9 +104,9 @@
 
 @endsection
 @section('script')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
+<script src="{{ asset('assets/js/select2.min.js') }}"></script>
+<script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
 <script>
    $(document).ready(function() {
     $('.action').select2();
@@ -125,7 +125,7 @@
         method: 'POST',
         data: {
             'data':data,
-            
+
         },
 
         success:function(data){
