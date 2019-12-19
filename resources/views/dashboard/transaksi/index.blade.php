@@ -11,12 +11,11 @@
           <table class="table align-items-center table-dark table-flush">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">Project</th>
+                <th scope="col">No</th>
                 <th scope="col">Barang</th>
-                <th scope="col">Status</th>
-                <th scope="col">Users</th>
-                <th scope="col">Completion</th>
-                <th scope="col"></th>
+                <th scope="col">Jumlah uang</th>
+                <th scope="col">Total yg dibayar</th>
+                <th scope="col">Tanggal</th>
               </tr>
             </thead>
             <tbody>
@@ -25,29 +24,18 @@
                 <?php
                     $name = json_decode($row->name, true);
                 ?>
-              <tr>
-                <th scope="row"></th>
-                <td>
-                    @foreach ($name as $nama)
-                         {{ $nama["name"] .= ', ' }}
-                    @endforeach
 
+              <tr>
+                <th scope="row">{{ $loop->iteration }}</th>
+                <td><a href="#">
+                    @foreach ($name as $nama)
+                    {{ $nama["name"] .= ', ' }}
+               @endforeach
+                </a>
                 </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="text-right">
-                  <div class="dropdown">
-                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                </td>
+                <td>{{ $row->money }}</td>
+                <td>{{ $row->total }}</td>
+                <td>{{ $row->created_at }}</td>
               </tr>
 
               @endforeach

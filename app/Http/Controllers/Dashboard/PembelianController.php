@@ -76,7 +76,8 @@ class PembelianController extends Controller
         $hasil = array_sum($z);
 
         if(strpos($member,'no') !== false){
-
+            $diskon = 0;
+            $hasilnya = $hasil - ($diskon * $hasil);
             $hasilnya = $request->get('uang') - $hasil;
             if($request->get('uang') > $hasil && $b!=""){
                 echo 'Kembaliannya : '.$hasilnya;
@@ -88,7 +89,8 @@ class PembelianController extends Controller
             }
 
         }else{
-            $hasilnya = $hasil - (0.05 * $hasil);
+            $diskon = 0.05;
+            $hasilnya = $hasil - ($diskon * $hasil);
             $hasilnya = $request->get('uang') - $hasilnya;
             if($request->get('uang') > $hasil && $b!=""){
                 echo 'Kembaliannya : '.$hasilnya;
@@ -102,6 +104,9 @@ class PembelianController extends Controller
         }
           $receipt = new Receipt;
           $receipt->name = $array;
+          $receipt->money = $request->get('uang');
+          $receipt->total = $hasilnya;
+          $receipt->discount = $diskon;
           $receipt->save();
 
 
