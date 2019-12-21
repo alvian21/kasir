@@ -29,7 +29,7 @@ class AuthController extends Controller
             if(Auth::attempt(['email' => $email, 'password' => $password])){
                 return redirect('/admin/dashboard');
             }else{
-                return redirect('/')->with('error','wrong email or password');
+                return redirect('/')->with('fail','wrong email or password');
             }
         }
     }
