@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim
+    Kasir
   </title>
   <!-- Favicon -->
   <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
@@ -45,6 +45,16 @@
               <div class="text-center text-muted mb-4">
                 <h3>Login</h3>
               </div>
+              @if($errors->any())
+              <div class="alert alert-danger" role="alert">
+                  {{$errors->first()}}
+              </div>
+              @endif
+              @if(session('fail'))
+              <div class="alert alert-danger  " role="alert">
+                     {{session('fail')}}
+                  </div>
+                  @endif
               <form role="form" method="POST" action="{{ Route('postlogin') }}">
                 @csrf
                 <div class="form-group mb-3">
