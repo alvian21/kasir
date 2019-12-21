@@ -26,4 +26,11 @@ class TransactionController extends Controller
         $data = Receipt::find($id);
         return view('dashboard.transaksi.detail', ['data'=>$data]);
     }
+
+    public function delete(Request $request)
+    {
+        if($request->get('delete')){
+            Receipt::find($request->get('id'))->delete();
+        }
+    }
 }

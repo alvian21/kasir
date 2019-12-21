@@ -18,6 +18,7 @@ class CreateReceiptsTable extends Migration
             $table->string('name');
             $table->string('money');
             $table->string('total');
+            $table->string('afterdiscount')->nullable();
             $table->string('discount');
             $table->timestamps();
         });

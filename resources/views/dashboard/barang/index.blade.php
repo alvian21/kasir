@@ -242,7 +242,7 @@ $(document).ready(function(){
             success:function(data){
                 fetch_data();
                 $('#modaledit').modal('hide');
-                alert('data has been edit');
+                swal("Berhasil", "Data berhasil di update", "success");
             }
 
             });

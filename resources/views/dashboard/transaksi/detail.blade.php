@@ -21,32 +21,37 @@
                 <b>Tanggal : {{ $data->created_at }}</b>
                 </td>
             </tr>
+
             <?php $x = json_decode($data->name ,true); ?>
+
+            @foreach($x as $row)
             <tr>
                 <td class="report-subtotal text-left regular-text data-col-half" colspan="2">
-                    {{ $x[0]["name"] }}
+                    {{ $row["name"] }}
                 </td>
                 <td class="report-subtotal text-center"  style="padding-right:80px;" >
-                        jumlah barang {{ $x[0]["qty"] }} x {{ $x[0]["price"] }}
+                        jumlah barang {{ $row["qty"] }} x {{ $row["price"] }}
                         </td>
                 <td class="border-top-thin" style="padding-left:80px;">
-                        {{ $x[0]["result"] }}
-            </td>
-            </tr>
-            @if(!empty($x[1]))
-                <tr>
-                    <td class="report-subtotal text-left regular-text data-col-half" colspan="2">
-                            {{ $x[1]["name"] }}
-                    </td>
-                    <td class="report-subtotal text-center"  style="padding-right:80px;" >
-                            jumlah barang {{ $x[1]["qty"] }} x {{ $x[1]["price"] }}
-                    </td>
-                    <td class="border-top-thin" style="padding-left:80px;">
-                            {{ $x[1]["result"] }}
+                        {{ $row["result"] }}
                 </td>
-                </tr>
-            @else
-            @endif
+            </tr>
+
+            @endforeach
+                {{-- @if(!empty($x[1]))
+                    <tr>
+                        <td class="report-subtotal text-left regular-text data-col-half" colspan="2">
+                                {{ $x[1]["name"] }}
+                        </td>
+                        <td class="report-subtotal text-center"  style="padding-right:80px;" >
+                                jumlah barang {{ $x[1]["qty"] }} x {{ $x[1]["price"] }}
+                        </td>
+                        <td class="border-top-thin" style="padding-left:80px;">
+                                {{ $x[1]["result"] }}
+                    </td>
+                    </tr>
+                @else
+                @endif
 
                 @if(!empty($x[2]))
                 <tr>
@@ -61,8 +66,18 @@
                     </td>
                     </tr>
                 @else
-                @endif
+                @endif --}}
 
+                <tr>
+                    <td class="report-subtotal text-left regular-text data-col-half" colspan="2">
+                          Total
+                    </td>
+                    <td class="report-subtotal text-right" id="assets-type-1-total-data">
+
+                    </td>
+                    <td class="border-top-thin" style="padding-left:80px;">
+                        {{ $data->total }}
+                    </td>
             </tr>
 
             <tr>
@@ -76,19 +91,20 @@
                     {{ $data->discount }}
                 </td>
             </tr>
-
-
             <tr>
-                    <td class="report-subtotal text-left regular-text data-col-half" colspan="2">
-                          Total
-                    </td>
-                    <td class="report-subtotal text-right" id="assets-type-1-total-data">
+                <td class="report-subtotal text-left regular-text data-col-half" colspan="2">
+                   Total setelah diskon
+                </td>
+                <td class="report-subtotal text-right" id="assets-type-1-total-data">
 
-                    </td>
-                    <td class="border-top-thin" style="padding-left:80px;">
-                        {{ $data->total }}
-                    </td>
+                </td>
+                <td class="border-top-thin" style="padding-left:80px;">
+                    {{ $data->afterdiscount }}
+                </td>
             </tr>
+
+
+
                     </tbody>
                     </table>
                 </div>

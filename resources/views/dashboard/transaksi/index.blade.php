@@ -5,7 +5,7 @@
     <div class="col">
       <div class="card bg-default shadow">
         <div class="card-header bg-transparent border-0">
-          <h3 class="text-white mb-0">Card tables</h3>
+          <h3 class="text-white mb-0">Daftar Transaksi</h3>
         </div>
         <div class="table-responsive">
           <table class="table align-items-center table-dark table-flush">
@@ -42,7 +42,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         <button class="dropdown-item " onclick="window.location.href='{{ Route('detail',[$row->id]) }}'">Detail</button>
-                        <button class="dropdown-item " >Delete</button>
+                        <button class="dropdown-item deletetransaction" data-id="{{ $row->id }}" >Delete</button>
                         </div>
                     </div>
               </td>
@@ -56,3 +56,39 @@
     </div>
   </div>
 @endsection
+@section('script')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+      $(document).ready(function(){
+            $('.deletetransaction').on('click', function(){
+                    var id = $(this).attr('data-id');
+                    var data = { 'delete':1,
+                                'id':id,
+                        };
+
+                        swal({
+                            title: "Apa kamu yakin?",
+                            text: "data yang dihapus tidak bisa dikembalikan",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                            })
+                            .then((willDelete) => {
+                            if (willDelete) {
+                                 $.ajax({
+                                        url:'{{ Route("transaksi.delete") }}' ,
+                                        method: 'GET',
+                                        data: data,
+                                        success:function(data){
+                                            swal("Berhasil", "Data berhasil dihapus", "success");
+                                            window.setTimeout(function(){window.location.reload()}, 1000);
+                                        }
+                                    });
+                            }
+                        });
+
+            });
+      });
+  </script>
+@endsection
+
