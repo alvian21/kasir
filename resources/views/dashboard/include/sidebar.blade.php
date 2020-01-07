@@ -30,8 +30,8 @@
 
         <!-- Navigation -->
         <ul class="navbar-nav">
-          <li class="nav-item  class=" active" ">
-          <a class=" nav-link active " href="{{ url('/admin/dashboard') }}"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
+          <li class="nav-item ">
+          <a class=" nav-link  " href="{{ url('/admin/dashboard') }}"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
             @if(Auth()->user()->role == 'admin')
@@ -43,25 +43,25 @@
             @endif
             @if(Auth()->user()->role == 'karyawan')
             <li class="nav-item">
-                    <a class="nav-link " href="{{ Route('pembelian') }}">
+                    <a class="nav-link {{ Request::path() ==  'admin/pembelian' ? 'active' : ''  }} " href="{{ Route('pembelian') }}">
                     <i class="ni ni-bag-17 text-yellow"></i>Pembelian
                     </a>
                 </li>
             @endif
             @if(Auth()->user()->role == 'karyawan')
             <li class="nav-item">
-                    <a class="nav-link " href="{{ route('member') }}">
+                    <a class="nav-link {{ Request::path() ==  'admin/member' ? 'active' : ''  }}" href="{{ route('member') }}">
                     <i class="ni ni-single-02 text-yellow"></i>Member
                     </a>
                 </li>
             @endif
           <li class="nav-item">
-            <a class="nav-link " href="{{ route('barang') }}">
+            <a class="nav-link {{ Request::path() ==  'admin/barang' ? 'active' : ''  }} " href="{{ route('barang') }}">
               <i class="ni ni-bullet-list-67 text-red"></i> Barang
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="{{ route('transaksi') }}">
+            <a class="nav-link {{ Request::path() ==  'admin/transaksi' ? 'active' : ''  }}" href="{{ route('transaksi') }}">
               <i class="ni ni-bullet-list-67 text-green"></i> Daftar Transaksi
             </a>
           </li>
