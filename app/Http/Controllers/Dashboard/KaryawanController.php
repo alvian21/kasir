@@ -45,7 +45,7 @@ class KaryawanController extends Controller
         if ($request->hasFile('image')) {
             $images = $request->file('image');
             $filename = time() . '.' . $images->getClientOriginalExtension();
-            Image::make($images)->resize(80, 80)->save(public_path('uploads/images/' . $filename));
+            Image::make($images)->resize(80, 80)->save(public_path('uploads/' . $filename));
             $karyawan->image = $filename;
         }
 
@@ -74,7 +74,7 @@ class KaryawanController extends Controller
         if ($request->hasFile('image')) {
             $images = $request->file('image');
             $filename = time() . '.' . $images->getClientOriginalExtension();
-            Image::make($images)->resize(80, 80)->save(public_path('uploads/images/' . $filename));
+            Image::make($images)->resize(80, 80)->save(public_path('uploads/' . $filename));
             $oldPhoto = $karyawan->image;
             //update ke database
             $karyawan = Data::find($id);
