@@ -31,12 +31,12 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item ">
-          <a class=" nav-link  " href="{{ url('/admin/dashboard') }}"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
+          <a class=" nav-link  {{ Request::path() ==  'admin/dashboard' ? 'active' : ''  }}" href="{{ url('/admin/dashboard') }}"> <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
             @if(Auth()->user()->role == 'admin')
             <li class="nav-item">
-                    <a class="nav-link " href="{{ route('karyawan') }}">
+                    <a class="nav-link {{ Request::path() ==  'admin/karyawan' ? 'active' : ''  }} " href="{{ route('karyawan') }}">
                     <i class="ni ni-single-02 text-yellow"></i>Data Karyawan
                     </a>
                 </li>
