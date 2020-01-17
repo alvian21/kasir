@@ -6,13 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Barang;
 use Illuminate\Support\Facades\Auth;
+use App\Receipt;
+
 
 class DashboardController extends Controller
 {
     public function index()
     {
         if(Auth::check()){
-            return view('dashboard.index');
+            $data = Receipt::all();
+            $sum = [];
+            $total = [];
+            foreach($data as $row){
+                $total[]= intval($row->total);
+              foreach(json_decode($row->name) as $ro => $val){
+                $sum[] = intval($val->qty);
+
+
+                    }
+            }
+            $hasil = array_sum($sum);
+            $pemasukan = array_sum($total);
+            return view('dashboard.index',['hasil'=>$hasil,'pemasukan'=>$pemasukan]);
         }
 
     }
