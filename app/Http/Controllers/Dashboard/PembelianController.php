@@ -78,10 +78,10 @@ class PembelianController extends Controller
 
         if(strpos($member,'no') !== false){
             $diskon = 0;
-            $pendiskon = $hasil - ($diskon * $hasil);
+            $diskonku = $diskon * $hasil;
+            $pendiskon = $hasil - ($diskonku);
             $hasilnya = $request->get('uang') - $pendiskon;
             if($request->get('uang') > $hasil && $b!=""){
-                echo 'Kembaliannya : '.$hasilnya;
                 $hitung->save();
             }elseif($request->get('uang')==null){
                 echo 'Masukkan jumlah uangnya';
@@ -91,10 +91,10 @@ class PembelianController extends Controller
 
         }else{
             $diskon = 0.05;
-            $pendiskon = $hasil - ($diskon * $hasil);
+            $diskonku = $diskon * $hasil;
+            $pendiskon = $hasil - ($diskonku);
             $hasilnya = $request->get('uang') - $pendiskon;
             if($request->get('uang') > $hasil && $b!=""){
-                echo 'Kembaliannya : '.$hasilnya;
                 $hitung->save();
             }elseif($request->get('uang')==null){
                 echo 'Masukkan jumlah uangnya';
@@ -110,6 +110,100 @@ class PembelianController extends Controller
           $receipt->afterdiscount = $pendiskon;
           $receipt->discount = $diskon;
           $receipt->save();
+          $html = '';
+          if($receipt->save()){
+
+            $x = json_decode($receipt->name ,true);
+                foreach($x as $row){
+                    $html .= '
+
+                <tr>
+                    <td class="report-subtotal text-left regular-text data-col-half" id="jmlhbrang" >
+                    '.$row['name'].'
+                    </td>
+                    <td class="report-subtotal text-center"   >
+                            jumlah barang   '.$row['qty'].' x   '.$row['price'].'
+                            </td>
+                    <td class="border-top-thin">
+                    '.$row['result'].'
+                    </td>
+                </tr>';
+                }
+
+                $html .=      '<tr>
+                      <td class="report-subtotal text-left regular-text data-col-half" >
+                            Total
+                      </td>
+                      <td class="report-subtotal text-right" id="assets-type-1-total-data">
+
+                      </td>
+                      <td class="border-top-thin" >
+                        '.$receipt->total.'
+                      </td>
+              </tr>
+              <tr>
+              <td class="report-subtotal text-left regular-text data-col-half" >
+                 Uang
+              </td>
+              <td class="report-subtotal text-right" id="assets-type-1-total-data">
+
+              </td>
+              <td class="border-top-thin" >
+              '.$receipt->money.'
+              </td>
+          </tr>
+
+              <tr>
+                  <td class="report-subtotal text-left regular-text data-col-half" >
+                     Diskon
+                  </td>
+                  <td class="report-subtotal text-right" id="assets-type-1-total-data">
+
+                  </td>
+                  <td class="border-top-thin" >
+                  '.$receipt->discount.'
+                  </td>
+              </tr>
+
+            <tr>
+              <td class="report-subtotal text-left regular-text data-col-half" >
+               Total Diskon
+              </td>
+              <td class="report-subtotal text-right" id="assets-type-1-total-data">
+
+              </td>
+              <td class="border-top-thin" >
+              '.$diskonku.'
+              </td>
+          </tr>
+              <tr>
+                  <td class="report-subtotal text-left regular-text data-col-half" >
+                     Total setelah diskon
+                  </td>
+                  <td class="report-subtotal text-right" id="assets-type-1-total-data">
+
+                  </td>
+                  <td class="border-top-thin" >
+                  '.$receipt->afterdiscount.'
+                  </td>
+              </tr>
+              <tr>
+              <td class="report-subtotal text-left regular-text data-col-half" >
+                 Kembalian
+              </td>
+              <td class="report-subtotal text-right" id="assets-type-1-total-data">
+
+              </td>
+              <td class="border-top-thin" >
+              '.$hasilnya.'
+              </td>
+          </tr>
+
+              ';
+
+
+              return $html;
+          }
 
 
     }

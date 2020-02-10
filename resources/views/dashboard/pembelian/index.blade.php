@@ -101,7 +101,43 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="modalhitung" tabindex="-1" role="dialog" aria-labelledby="modalhitungLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
 
+        <div class="modal-body" >
+            <div class="col-lg-12 content-wrapper">
+                <div class="table-container list-table">
+                <div class="report-title">
+                <table class="profit-loss report-table table" id="date-profit-lost">
+                <thead class="report-header">
+                    <tr>
+                        <th colspan="2">
+                     Detail Transaksi
+                        </th>
+                    <th></th>
+
+                    </tr>
+                </thead>
+                <tbody id="modalshow">
+
+
+                </tbody>
+            </table>
+                </div>
+            </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+          {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+          <button type="button" class="btn btn-info" data-dismiss="modal">Oke</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 @section('script')
 <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
@@ -185,8 +221,9 @@
             success:function(response){
                 $('#formpembelian')[0].reset();
                 // $('#fetchitung')[0].reset();
-                console.log(response);
-                swal(response);
+                $('#modalhitung').modal('show');
+                $('#modalshow').html(response);
+                // swal(response);
 
             }
       });
