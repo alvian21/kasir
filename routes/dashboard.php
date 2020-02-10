@@ -40,6 +40,9 @@ Route::group([
         Route::post('/barang','DashboardController@barangBaru')->name('tmbbarang');
         Route::post('/fetchdata','DashboardController@fetchdata');
         Route::get('/pembelian','PembelianController@index')->name('pembelian');
+        Route::post('/pembelian/post','PembelianController@savehasil');
+        Route::post('/pembelian/savemoney','PembelianController@savemoney');
+        Route::get('/pembelian/hasil','PembelianController@hasilku');
         Route::post('/barang/edit','DashboardController@editBarang')->name('editbarang');
         Route::get('/barang/delete','DashboardController@deleteBarang')->name('deleteBarang');
         Route::get('/transaksi','TransactionController@index')->name('transaksi');

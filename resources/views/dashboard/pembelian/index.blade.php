@@ -32,8 +32,7 @@
                         @endforeach
                     </select>
                     <br>
-                     <label class="form-control-label" for="uang">Jumlah uang</label>
-                    <input type="number" id="uang" name="uang" min="0" class="form-control form-control-alternative" placeholder="Jumlah Uang">
+
                   </div>
                 </div>
                 <div class="col-lg-6">
@@ -53,9 +52,10 @@
                   </div>
                 <div class="col-lg-3">
                   <div class="form-group focused" id="fetchitung">
-                    {{-- <label class="form-control-label" for="input-last-name">Nama belakang</label>
-                    <input type="text" id="input-last-name" name="lastname" class="form-control form-control-alternative" placeholder="Nama belakang"> --}}
+
                   </div>
+
+
                 </div>
               </div>
             </div>
@@ -126,14 +126,40 @@
                 </tbody>
             </table>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <form id="hasiluang">
+                         <input type="number" id="uang" name="uang" min="0" class="form-control form-control-alternative" placeholder="Jumlah Uang">
+                        </form>
+                    </div>
+
+                </div>
+                <br>
+                <table class="profit-loss report-table table" id="date-profit-lost">
+                    <thead class="report-header">
+                        <tbody>
+                            <tr>
+                                <td class="report-subtotal text-left regular-text data-col-half" >
+                                Kembalian
+                                </td>
+                                <td class="report-subtotal text-right" id="assets-type-1-total-data">
+
+                                </td>
+                                <td class="border-top-thin" id="kembalian" style="padding-left:200px;" >
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </thead>
+                </table>
             </div>
 
 
         </div>
+        </div>
         <div class="modal-footer">
-          {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-          <button type="button" class="btn btn-info" data-dismiss="modal">Oke</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-info" id="savehasil">Simpan</button>
         </div>
       </div>
     </div>
@@ -174,9 +200,6 @@
 
 
     $(document).on('click','.hitung', function(){
-        // var values = $("input[id='datahitung']").map(function(){return
-        // $(this).val();}).get();
-        // var id = $("input[id='datahitung']").map(function(){return $(this).attr('data-id');}).get();
         var none = $(this).find('option:selected').length;
         var values = [];
       $("div input[name='datahitung']").each(function() {
@@ -207,8 +230,6 @@
             swal("Error", "Pilih barang yg mau dibeli", "error");
         }else if($('#datahitung').val()==""){
             swal("Error", "Silahkan masukkan jumlah barangnya", "error");
-        }else if($('#uang').val()==""){
-            swal("Error", "Silahkan masukkan jumlah uangnya", "error");
         }else{
             $.ajax({
             url: '{{ Route("beli.hitung") }}',
@@ -223,11 +244,44 @@
                 // $('#fetchitung')[0].reset();
                 $('#modalhitung').modal('show');
                 $('#modalshow').html(response);
+
                 // swal(response);
+
 
             }
       });
         }
+    });
+
+
+    $('#uang').on('keyup', function(){
+            var uang = $('#uang').val();
+            var id = $('#iddata').val();
+            $.ajax({
+                url:'/admin/pembelian/post',
+                method:'POST',
+                data:{'savehasil':1,'id':id,'uang':uang},
+                success:function(data){
+                  $('#kembalian').text(data);
+                }
+            });
+    });
+
+
+    $('#savehasil').on('click', function(){
+        var id = $('#iddata').val();
+        var back = $('#kembalian').text();
+        var money = $('#uang').val();
+        $.ajax({
+                url:'/admin/pembelian/savemoney',
+                method:'POST',
+                data:{'savemoney':1,'id':id,'uang':money,'back':back},
+                success:function(data){
+
+                    $('#modalhitung').modal('hide');
+                    $('#hasiluang')[0].reset();
+                }
+            });
     });
 });
 </script>

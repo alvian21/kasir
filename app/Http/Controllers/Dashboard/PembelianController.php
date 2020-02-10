@@ -39,8 +39,15 @@ class PembelianController extends Controller
 
     public function hitung(Request $request)
     {
+        $html = '';
         $data = $request->get('data');
         $member = $request->get('member');
+        $memberku = Member::find($member);
+        if(!empty($memberku)){
+            $hasildata = $memberku->name;
+        }else{
+            $hasildata = 'Tidak punya';
+        }
         $z = array();
         $coba = array();
         foreach ($data as $key => $value) {
@@ -59,6 +66,17 @@ class PembelianController extends Controller
                     'result: '.$result
                     );
 
+                    $html .= '  <tr>
+                                <td class="report-subtotal text-left regular-text data-col-half" id="jmlhbrang" >
+                                '.$hitung->name.'
+                                </td>
+                                <td class="report-subtotal text-center"   >
+                                        jumlah barang   '.$b.' x   '.$hitung->harga.'
+                                        </td>
+                                <td class="border-top-thin">
+                                '.$result.'
+                                </td>
+                            </tr>';
                     $final = array();
 
                     foreach($intial as $dataku){
@@ -104,31 +122,14 @@ class PembelianController extends Controller
 
         }
           $receipt = new Receipt;
+          $receipt->member = $hasildata;
           $receipt->name = $array;
-          $receipt->money = $request->get('uang');
           $receipt->total = $hasil;
           $receipt->afterdiscount = $pendiskon;
           $receipt->discount = $diskon;
           $receipt->save();
-          $html = '';
-          if($receipt->save()){
 
-            $x = json_decode($receipt->name ,true);
-                foreach($x as $row){
-                    $html .= '
 
-                <tr>
-                    <td class="report-subtotal text-left regular-text data-col-half" id="jmlhbrang" >
-                    '.$row['name'].'
-                    </td>
-                    <td class="report-subtotal text-center"   >
-                            jumlah barang   '.$row['qty'].' x   '.$row['price'].'
-                            </td>
-                    <td class="border-top-thin">
-                    '.$row['result'].'
-                    </td>
-                </tr>';
-                }
 
                 $html .=      '<tr>
                       <td class="report-subtotal text-left regular-text data-col-half" >
@@ -138,18 +139,18 @@ class PembelianController extends Controller
 
                       </td>
                       <td class="border-top-thin" >
-                        '.$receipt->total.'
+                        '.$hasil.'
                       </td>
               </tr>
               <tr>
               <td class="report-subtotal text-left regular-text data-col-half" >
-                 Uang
+                 Member
               </td>
               <td class="report-subtotal text-right" id="assets-type-1-total-data">
 
               </td>
               <td class="border-top-thin" >
-              '.$receipt->money.'
+              '.$hasildata.'
               </td>
           </tr>
 
@@ -161,7 +162,7 @@ class PembelianController extends Controller
 
                   </td>
                   <td class="border-top-thin" >
-                  '.$receipt->discount.'
+                  '.$diskon.'
                   </td>
               </tr>
 
@@ -184,28 +185,39 @@ class PembelianController extends Controller
 
                   </td>
                   <td class="border-top-thin" >
-                  '.$receipt->afterdiscount.'
+                  '.$pendiskon.'
                   </td>
               </tr>
-              <tr>
-              <td class="report-subtotal text-left regular-text data-col-half" >
-                 Kembalian
-              </td>
-              <td class="report-subtotal text-right" id="assets-type-1-total-data">
-
-              </td>
-              <td class="border-top-thin" >
-              '.$hasilnya.'
-              </td>
-          </tr>
-
+              <input type="hidden" name="iddata" id="iddata" value="'.$receipt->id.'">
               ';
 
 
-              return $html;
-          }
+               return $html;
 
+    }
 
+    public function savehasil(Request $request)
+    {
+        if($request->get('savehasil')){
+            $data = Receipt::find($request->get('id'));
+            if($request->get('uang') > $data->afterdiscount){
+                $hasil = $request->get('uang') - $data->afterdiscount;
+            }else{
+                $hasil = 'Uangnya kurang';
+            }
+            return $hasil;
+        }
+    }
+
+    public function savemoney(Request $request)
+    {
+        if($request->get('savemoney')){
+            $data = Receipt::find($request->get('id'));
+            $data->back = $request->get('back');
+            $data->money = $request->get('uang');
+            $data->save();
+            echo 'berhasil';
+        }
     }
 
     public function digits($num)

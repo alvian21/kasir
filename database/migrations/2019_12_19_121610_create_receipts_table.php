@@ -16,9 +16,11 @@ class CreateReceiptsTable extends Migration
         Schema::create('receipts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('money');
+            $table->string('member')->nullable();
+            $table->string('money')->nullable();
             $table->string('total');
             $table->string('afterdiscount')->nullable();
+            $table->string('back')->nullable();
             $table->string('discount');
             $table->timestamps();
         });
